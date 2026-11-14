@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%lld days" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "variations" : {
@@ -23,10 +24,31 @@
         }
       }
     },
-    "Learning Journey" : {
+    "Activities" : {
+
+    },
+    "Activity" : {
+
+    },
+    "Calendar" : {
+
+    },
+    "Hello Learner" : {
+
+    },
+    "Learning Goal" : {
 
     },
     "Month" : {
+
+    },
+    "Save (temporary)" : {
+
+    },
+    "Set a goal" : {
+
+    },
+    "Start Learning" : {
 
     },
     "Week" : {
