@@ -16,9 +16,12 @@ struct ActivitySnapshot: Equatable {
     let todayKind: DayLog.Kind?
     let goalState: GoalState
     let dayKinds: [Date: DayLog.Kind]
-
+    let todayLoggedInOtherGoal: Bool          // ← جديد
+    
     /// زر "Log as Learned" شغّال؟
-    var canLog: Bool { goalState == .active && todayKind == nil }
+    var canLog: Bool {
+        goalState == .active && todayKind == nil && !todayLoggedInOtherGoal
+    }
 
     /// زر "Freeze for a day" شغّال؟
     var canFreeze: Bool { canLog && freezesUsed < freezeLimit }
@@ -26,3 +29,7 @@ struct ActivitySnapshot: Equatable {
     /// نوع التسجيل في يوم معيّن، عشان نلوّن شريط الأسبوع
     func kind(on day: Date) -> DayLog.Kind? { dayKinds[day] }
 }
+
+
+
+

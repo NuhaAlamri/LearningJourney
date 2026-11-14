@@ -1,13 +1,20 @@
 import SwiftUI
+import SwiftData
 
+/// الحاوية: تربط الهدف والوقت بالمحرك، وتمرر اللقطة للعرض
 struct ActivityView: View {
     let goal: Goal
 
+    @Environment(\.modelContext) private var context
+    @State private var viewModel = ActivityViewModel()
+
     var body: some View {
-        VStack(spacing: 16) {
-            Text(goal.topic)
-                .font(.title)
-            NavigationLink("Set a goal", value: Route.newGoal)   // مؤقت للتجربة
+        TimelineView(.everyMinute) { timeline in
+            ActivityContent(
+                snapshot: viewModel.snapshot(for: goal, now: timeline.date, context: context),
+                onLog: { viewModel.log(.learned, for: goal, context: context) },
+                onFreeze: { viewModel.log(.freezed, for: goal, context: context) }
+            )
         }
         .navigationTitle("Activity")
         .toolbar {
@@ -22,5 +29,12 @@ struct ActivityView: View {
                 }
             }
         }
+    }
+}
+
+#Preview(traits: .sampleData) {
+    @Previewable @Query var goals: [Goal]
+    NavigationStack {
+        if let goal = goals.first { ActivityView(goal: goal) }
     }
 }

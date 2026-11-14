@@ -135,6 +135,16 @@ struct StreakEngineTests {
         #expect(midnight.todayKind == nil)
         #expect(midnight.streak == 1)   // السلسلة باقية
     }
+    
+    @Test func cannotLogWhenTodayWasLoggedInPreviousGoal() {
+        let s = StreakEngine.snapshot(
+            start: Fixtures.october(20), duration: .week, logs: [],
+            now: Fixtures.october(20, hour: 15),
+            loggedTodayInAnyGoal: true, calendar: calendar
+        )
+        #expect(!s.canLog)
+        #expect(!s.canFreeze)
+    }
 
     // MARK: - Goal end
 

@@ -22,23 +22,26 @@ enum StreakEngine {
         duration: GoalDuration,
         logs: [LogEntry],
         now: Date,
+        loggedTodayInAnyGoal: Bool = false,
         calendar: Calendar = .current
     ) -> ActivitySnapshot {
         let today = calendar.startOfDay(for: now)
+        let todayKind = logs.first { $0.day == today }?.kind
         let end = duration.endDate(from: start, calendar: calendar)
         let goalState: ActivitySnapshot.GoalState =
-        now < end ? .active : goalResult(logs: logs, end: end)
+            now < end ? .active : goalResult(logs: logs, end: end)
         let chain = currentChain(logs, at: min(now, end))
-        
+
         return ActivitySnapshot(
             today: today,
             streak: chain.count,
             freezesUsed: logs.filter { $0.kind == .freezed }.count,
             freezeLimit: duration.freezeLimit,
-            todayKind: logs.first { $0.day == today }?.kind,
+            todayKind: todayKind,
             goalState: goalState,
             dayKinds: Dictionary(logs.map { ($0.day, $0.kind) },
-                                 uniquingKeysWith: { _, latest in latest })
+                                 uniquingKeysWith: { _, latest in latest }),
+            todayLoggedInOtherGoal: loggedTodayInAnyGoal && todayKind == nil
         )
     }
     

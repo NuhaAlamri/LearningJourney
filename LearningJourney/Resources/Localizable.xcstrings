@@ -2,7 +2,6 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%lld days" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "variations" : {
@@ -24,6 +23,16 @@
         }
       }
     },
+    "%lld out of %lld Freezes used" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld out of %2$lld Freezes used"
+          }
+        }
+      }
+    },
     "Activities" : {
 
     },
@@ -33,10 +42,22 @@
     "Calendar" : {
 
     },
+    "Freeze for a day" : {
+
+    },
+    "Freezed" : {
+
+    },
     "Hello Learner" : {
 
     },
+    "Learned" : {
+
+    },
     "Learning Goal" : {
+
+    },
+    "Log as Learned" : {
 
     },
     "Month" : {
@@ -54,7 +75,13 @@
     "Week" : {
 
     },
+    "Well done!" : {
+
+    },
     "Year" : {
+
+    },
+    "You didn't reach your goal this time." : {
 
     }
   },

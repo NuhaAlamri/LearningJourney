@@ -93,6 +93,12 @@ extension Fixtures.State {
             + freezed.map { entry(day: $0, kind: .freezed) }
     }
 
+    /// لقطة المحرك لهذي الحالة (للمعاينات)
+    var snapshot: ActivitySnapshot {
+        StreakEngine.snapshot(start: start, duration: duration, logs: entries,
+                              now: now, calendar: Fixtures.calendar)
+    }
+    
     private func entry(day: Int, kind: DayLog.Kind) -> LogEntry {
         let moment = Fixtures.october(day)
         return LogEntry(day: Fixtures.calendar.startOfDay(for: moment), loggedAt: moment, kind: kind)
