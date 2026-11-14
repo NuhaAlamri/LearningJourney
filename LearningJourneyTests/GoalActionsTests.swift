@@ -99,4 +99,30 @@ struct GoalActionsTests {
         #expect(try !context.logToday(.learned, for: new, now: at(20, 16), calendar: calendar))
         #expect(old.logs.count == 1)   // تسجيل الهدف القديم ما انمسح
     }
+    // MARK: - Extra (T11)
+
+    @Test func savedDataIsVisibleFromANewContext() throws {
+        let goal = try context.startGoal(topic: "Swift", duration: .week, now: at(20))
+        try context.logToday(.learned, for: goal, now: at(20, 10), calendar: calendar)
+
+        let fresh = ModelContext(container)
+        let logs = try fresh.fetch(FetchDescriptor<DayLog>())
+        #expect(logs.count == 1)
+        #expect(logs.first?.goal?.topic == "Swift")
+    }
+
+    @Test func cannotLogAfterGoalEnded() throws {
+        let goal = try context.startGoal(topic: "Swift", duration: .week, now: at(20))
+
+        #expect(try !context.logToday(.learned, for: goal, now: at(27, 10), calendar: calendar))
+        #expect(goal.logs.isEmpty)
+    }
+
+    @Test func canLogAgainRightAfterMidnight() throws {
+        let goal = try context.startGoal(topic: "Swift", duration: .week, now: at(20))
+
+        #expect(try context.logToday(.learned, for: goal, now: at(20, 23), calendar: calendar))
+        #expect(try context.logToday(.learned, for: goal, now: at(21, 0), calendar: calendar))
+        #expect(goal.logs.count == 2)
+    }
 }
