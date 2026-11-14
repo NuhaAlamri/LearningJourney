@@ -11,15 +11,9 @@ struct ActivityContent: View {
             Text(snapshot.today, format: .dateTime.weekday(.wide).day().month(.wide))
                 .font(.headline)
 
-            HStack(spacing: 32) {
-                VStack {
-                    Text("\(snapshot.streak) days").font(.callout.weight(.semibold))
-                    Text("Learned").font(.caption)
-                }
-                VStack {
-                    Text("\(snapshot.freezesUsed) days").font(.callout.weight(.semibold))
-                    Text("Freezed").font(.caption)
-                }
+            HStack(spacing: 12) {
+                StatCard.learned(snapshot.streak)
+                StatCard.freezed(snapshot.freezesUsed)
             }
 
             switch snapshot.goalState {
