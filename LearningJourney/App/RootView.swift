@@ -38,3 +38,7 @@ struct RootView: View {
 #Preview("With goal", traits: .sampleData) {
     RootView()
 }
+
+#Preview("Goal ended", traits: .endedGoal) {
+    RootView()
+}

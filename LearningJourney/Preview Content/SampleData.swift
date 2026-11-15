@@ -5,12 +5,29 @@ import SwiftData
 struct SampleData: PreviewModifier {
 
     static func makeSharedContext() throws -> ModelContainer {
+        try container(with: Fixtures.currentDay)
+    }
+
+    func body(content: Content, context: ModelContainer) -> some View {
+        content.modelContainer(context)
+    }
+
+    /// قاعدة بيانات في الذاكرة فيها حالة وحدة من Fixtures
+    static func container(with state: Fixtures.State) throws -> ModelContainer {
         let container = try ModelContainer(
             for: Goal.self, DayLog.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
-        Fixtures.currentDay.insert(into: container.mainContext)
+        state.insert(into: container.mainContext)
         return container
+    }
+}
+
+/// بيانات هدف انتهت مدته (لتجربة Well done + Set a goal)
+struct EndedGoalData: PreviewModifier {
+
+    static func makeSharedContext() throws -> ModelContainer {
+        try SampleData.container(with: Fixtures.goalCompleted)
     }
 
     func body(content: Content, context: ModelContainer) -> some View {
@@ -20,6 +37,7 @@ struct SampleData: PreviewModifier {
 
 extension PreviewTrait where T == Preview.ViewTraits {
     @MainActor static var sampleData: Self = .modifier(SampleData())
+    @MainActor static var endedGoal: Self = .modifier(EndedGoalData())
 }
 
 #Preview("Sample data", traits: .sampleData) {

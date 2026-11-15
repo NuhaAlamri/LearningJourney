@@ -54,6 +54,9 @@ struct ActivityContent: View {
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 24)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 24)
+            .animation(.default, value: snapshot.goalState)
         }
         .navigationTitle("Activity")
         .navigationSubtitle(
