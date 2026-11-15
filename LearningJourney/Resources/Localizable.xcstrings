@@ -54,7 +54,7 @@
     "Freezed for a day" : {
 
     },
-    "Hello Learner" : {
+    "Hello %@" : {
 
     },
     "I want to learn" : {
@@ -64,6 +64,9 @@
 
     },
     "Learned" : {
+
+    },
+    "Learner" : {
 
     },
     "Learning Goal" : {
@@ -93,6 +96,9 @@
     "Swift" : {
 
     },
+    "This app will help you learn every day!" : {
+
+    },
     "Want to set another goal?" : {
 
     },
@@ -103,6 +109,9 @@
 
     },
     "Year" : {
+
+    },
+    "You can edit your desire later" : {
 
     },
     "You didn't reach your goal this time." : {
