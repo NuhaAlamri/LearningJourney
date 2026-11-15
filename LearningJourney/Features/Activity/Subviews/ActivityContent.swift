@@ -28,9 +28,11 @@ struct ActivityContent: View {
 
             switch snapshot.goalState {
             case .active:
-                Button("Log as Learned", action: onLog)
-                    .buttonStyle(.borderedProminent)
-                    .disabled(!snapshot.canLog)
+                LogButton(
+                    state: LogButtonState(todayKind: snapshot.todayKind),
+                    isEnabled: snapshot.canLog,
+                    action: onLog
+                )
                 Button("Freeze for a day", action: onFreeze)
                     .buttonStyle(.bordered)
                     .disabled(!snapshot.canFreeze)
@@ -64,15 +66,15 @@ struct ActivityContent: View {
     }
 }
 
-#Preview("Freezed today") {
+#Preview("Learned today") {
     NavigationStack {
-        ActivityContent(snapshot: Fixtures.freezedToday.snapshot, calendar: Fixtures.calendar)
+        ActivityContent(snapshot: Fixtures.learnedToday.snapshot, calendar: Fixtures.calendar)
     }
 }
 
-#Preview("No Freezes available") {
+#Preview("Freezed today") {
     NavigationStack {
-        ActivityContent(snapshot: Fixtures.noFreezesLeft.snapshot, calendar: Fixtures.calendar)
+        ActivityContent(snapshot: Fixtures.freezedToday.snapshot, calendar: Fixtures.calendar)
     }
 }
 

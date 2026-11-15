@@ -42,6 +42,9 @@
     "Calendar" : {
 
     },
+    "Day Freezed" : {
+
+    },
     "Freeze for a day" : {
 
     },
@@ -64,6 +67,9 @@
 
     },
     "Log as Learned" : {
+
+    },
+    "Logged as Learned" : {
 
     },
     "Month" : {
