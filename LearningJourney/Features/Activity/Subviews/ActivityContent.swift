@@ -33,12 +33,13 @@ struct ActivityContent: View {
                     isEnabled: snapshot.canLog,
                     action: onLog
                 )
-                Button("Freeze for a day", action: onFreeze)
-                    .buttonStyle(.bordered)
-                    .disabled(!snapshot.canFreeze)
-                Text("\(snapshot.freezesUsed) out of \(snapshot.freezeLimit) Freezes used")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                FreezeSection(
+                    canFreeze: snapshot.canFreeze,
+                    isFreezedToday: snapshot.todayKind == .freezed,
+                    used: snapshot.freezesUsed,
+                    limit: snapshot.freezeLimit,
+                    action: onFreeze
+                )
 
             case .completed:
                 Text("Well done!").font(.callout.bold())
@@ -75,6 +76,12 @@ struct ActivityContent: View {
 #Preview("Freezed today") {
     NavigationStack {
         ActivityContent(snapshot: Fixtures.freezedToday.snapshot, calendar: Fixtures.calendar)
+    }
+}
+
+#Preview("No Freezes available") {
+    NavigationStack {
+        ActivityContent(snapshot: Fixtures.noFreezesLeft.snapshot, calendar: Fixtures.calendar)
     }
 }
 
