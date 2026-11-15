@@ -35,6 +35,7 @@ enum StreakEngine {
         return ActivitySnapshot(
             today: today,
             streak: chain.count,
+            learnedDays: chain.filter { $0.kind == .learned }.count,
             freezesUsed: logs.filter { $0.kind == .freezed }.count,
             freezeLimit: duration.freezeLimit,
             todayKind: todayKind,

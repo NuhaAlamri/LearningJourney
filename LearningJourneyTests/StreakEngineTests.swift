@@ -122,6 +122,19 @@ struct StreakEngineTests {
         #expect(s.freezeLimit == 8)
         #expect(s.canFreeze)
     }
+    
+    @Test func learnedCardCountsOnlyLearnedDays() {
+        let s = snapshot([log(20), log(21, .freezed), log(22)], now: Fixtures.october(22, hour: 10))
+        #expect(s.streak == 3)        // المنطق: السلسلة 3 أيام
+        #expect(s.learnedDays == 2)   // العرض: تعلّم يومين
+        #expect(s.freezesUsed == 1)   // العرض: جمّد يوم
+    }
+
+    @Test func freezeOnlyShowsZeroLearned() {
+        let s = snapshot([log(20, .freezed)], now: Fixtures.october(20, hour: 10))
+        #expect(s.learnedDays == 0)
+        #expect(s.freezesUsed == 1)
+    }
 
     // MARK: - Midnight
 
