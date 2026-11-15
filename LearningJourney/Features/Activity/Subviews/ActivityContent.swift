@@ -42,12 +42,10 @@ struct ActivityContent: View {
                 )
 
             case .completed:
-                Text("Well done!").font(.callout.bold())
-                NavigationLink("Set a goal", value: Route.newGoal)
+                GoalEndView(outcome: .completed)
 
             case .notMet:
-                Text("You didn't reach your goal this time.").font(.callout.bold())
-                NavigationLink("Set a goal", value: Route.newGoal)
+                GoalEndView(outcome: .notMet)
             }
         }
         .padding()
@@ -82,6 +80,12 @@ struct ActivityContent: View {
 #Preview("No Freezes available") {
     NavigationStack {
         ActivityContent(snapshot: Fixtures.noFreezesLeft.snapshot, calendar: Fixtures.calendar)
+    }
+}
+
+#Preview("Goal completed") {
+    NavigationStack {
+        ActivityContent(snapshot: Fixtures.goalCompleted.snapshot, calendar: Fixtures.calendar)
     }
 }
 
