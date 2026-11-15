@@ -16,16 +16,13 @@ struct ActivityView: View {
                 onFreeze: { viewModel.log(.freezed, for: goal, context: context) }
             )
         }
-        .navigationTitle("Activity")
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink(value: Route.calendar) {
-                    Label("Calendar", systemImage: "calendar")
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 NavigationLink(value: Route.editGoal) {
                     Label("Learning Goal", systemImage: "pencil.and.outline")
+                }
+                NavigationLink(value: Route.calendar) {
+                    Label("Activities", systemImage: "calendar")   // ⚑ الأيقونة
                 }
             }
         }

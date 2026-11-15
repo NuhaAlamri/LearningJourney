@@ -8,47 +8,57 @@ struct ActivityContent: View {
     var calendar: Calendar = .current
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text(snapshot.today, format: .dateTime.weekday(.wide).day().month(.wide))
-                .font(.headline)
+        ScrollView {
+            VStack(spacing: 0) {
+                VStack(spacing: 12) {
+                    WeekStripView(
+                        days: CalendarMath.weekDays(containing: snapshot.today, calendar: calendar),
+                        symbols: CalendarMath.weekdaySymbols(calendar: calendar),
+                        status: dayStatus(for:),
+                        calendar: calendar
+                    )
 
-            VStack(spacing: 12) {
-                WeekStripView(
-                    days: CalendarMath.weekDays(containing: snapshot.today, calendar: calendar),
-                    symbols: CalendarMath.weekdaySymbols(calendar: calendar),
-                    status: dayStatus(for:),
-                    calendar: calendar
-                )
+                    HStack(spacing: 12) {
+                        StatCard.learned(snapshot.learnedDays)
+                        StatCard.freezed(snapshot.freezesUsed)
+                    }
+                }
+                .padding(.top, 16)
 
-                HStack(spacing: 12) {
-                    StatCard.learned(snapshot.learnedDays)
-                    StatCard.freezed(snapshot.freezesUsed)
+                switch snapshot.goalState {
+                case .active:
+                    LogButton(
+                        state: LogButtonState(todayKind: snapshot.todayKind),
+                        isEnabled: snapshot.canLog,
+                        action: onLog
+                    )
+                    .padding(.top, 56)
+
+                    FreezeSection(
+                        canFreeze: snapshot.canFreeze,
+                        isFreezedToday: snapshot.todayKind == .freezed,
+                        used: snapshot.freezesUsed,
+                        limit: snapshot.freezeLimit,
+                        action: onFreeze
+                    )
+                    .padding(.top, 48)
+
+                case .completed:
+                    GoalEndView(outcome: .completed)
+                        .padding(.top, 56)
+
+                case .notMet:
+                    GoalEndView(outcome: .notMet)
+                        .padding(.top, 56)
                 }
             }
-
-            switch snapshot.goalState {
-            case .active:
-                LogButton(
-                    state: LogButtonState(todayKind: snapshot.todayKind),
-                    isEnabled: snapshot.canLog,
-                    action: onLog
-                )
-                FreezeSection(
-                    canFreeze: snapshot.canFreeze,
-                    isFreezedToday: snapshot.todayKind == .freezed,
-                    used: snapshot.freezesUsed,
-                    limit: snapshot.freezeLimit,
-                    action: onFreeze
-                )
-
-            case .completed:
-                GoalEndView(outcome: .completed)
-
-            case .notMet:
-                GoalEndView(outcome: .notMet)
-            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 24)
         }
-        .padding()
+        .navigationTitle("Activity")
+        .navigationSubtitle(
+            snapshot.today.formatted(.dateTime.weekday(.wide).day().month(.wide))
+        )
     }
 
     /// حالة كل يوم في الشريط

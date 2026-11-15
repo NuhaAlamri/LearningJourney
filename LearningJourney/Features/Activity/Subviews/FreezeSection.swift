@@ -9,7 +9,7 @@ struct FreezeSection: View {
     let action: () -> Void
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             Button(action: action) {
                 Text(title)
                     .font(.body.weight(.medium))
