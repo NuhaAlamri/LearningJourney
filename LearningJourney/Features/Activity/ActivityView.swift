@@ -22,7 +22,8 @@ struct ActivityView: View {
                     Label("Learning Goal", systemImage: "pencil.and.outline")
                 }
                 NavigationLink(value: Route.calendar) {
-                    Label("Activities", systemImage: "calendar")   // ⚑ الأيقونة
+                    Label("Calendar", systemImage: "calendar")
+                    
                 }
             }
         }

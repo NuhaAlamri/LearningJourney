@@ -27,8 +27,8 @@ struct MonthGridView: View {
                         .frame(width: 1, height: 1)
                 }
 
-                ForEach(CalendarMath.days(inMonth: month, calendar: calendar), id: \.self) { day in
-                    DayCell(day: calendar.component(.day, from: day), status: status(day))
+                    ForEach(CalendarMath.days(inMonth: month, calendar: calendar), id: \.self) { day in
+                        DayCell(day: calendar.component(.day, from: day), status: status(day), date: day)
                 }
             }
         }

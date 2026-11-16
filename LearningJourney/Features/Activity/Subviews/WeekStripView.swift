@@ -20,7 +20,7 @@ struct WeekStripView: View {
 
             HStack(spacing: 0) {
                 ForEach(days, id: \.self) { day in
-                    DayCell(day: calendar.component(.day, from: day), status: status(day))
+                    DayCell(day: calendar.component(.day, from: day), status: status(day), date: day)
                         .frame(maxWidth: .infinity)
                 }
             }

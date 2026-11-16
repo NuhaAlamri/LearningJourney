@@ -17,6 +17,16 @@ extension DayStatus {
         case nil:      self = isToday ? .todayPending : .plain
         }
     }
+
+    /// اللي يقرأه VoiceOver بعد التاريخ
+    var accessibilityValue: String {
+        switch self {
+        case .plain:        ""
+        case .learned:      String(localized: "Learned")
+        case .freezed:      String(localized: "Freezed")
+        case .todayPending: String(localized: "Not logged yet")
+        }
+    }
 }
 
 /// خلية يوم دائرية، مثل Sketch
@@ -24,6 +34,7 @@ struct DayCell: View {
     let day: Int
     let status: DayStatus
     var size: CGFloat = 38
+    var date: Date? = nil
 
     @ScaledMetric(relativeTo: .title3) private var scale: CGFloat = 1
 
@@ -33,6 +44,16 @@ struct DayCell: View {
             .foregroundStyle(textColor)
             .frame(width: size * scale, height: size * scale)
             .background(background, in: .circle)
+            .accessibilityLabel(accessibilityLabel)
+            .accessibilityValue(status.accessibilityValue)
+    }
+
+    private var accessibilityLabel: Text {
+        if let date {
+            Text(date, format: .dateTime.weekday(.wide).day().month(.wide))
+        } else {
+            Text(day, format: .number)
+        }
     }
 
     private var textColor: Color {
