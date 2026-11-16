@@ -21,8 +21,8 @@ enum StreakEngine {
         start: Date,
         duration: GoalDuration,
         logs: [LogEntry],
+        otherLogs: [LogEntry] = [],
         now: Date,
-        loggedTodayInAnyGoal: Bool = false,
         calendar: Calendar = .current
     ) -> ActivitySnapshot {
         let today = calendar.startOfDay(for: now)
@@ -31,6 +31,7 @@ enum StreakEngine {
         let goalState: ActivitySnapshot.GoalState =
             now < end ? .active : goalResult(logs: logs, end: end)
         let chain = currentChain(logs, at: min(now, end))
+        let loggedTodayElsewhere = otherLogs.contains { $0.day == today }
 
         return ActivitySnapshot(
             today: today,
@@ -40,9 +41,9 @@ enum StreakEngine {
             freezeLimit: duration.freezeLimit,
             todayKind: todayKind,
             goalState: goalState,
-            dayKinds: Dictionary(logs.map { ($0.day, $0.kind) },
+            dayKinds: Dictionary((otherLogs + logs).map { ($0.day, $0.kind) },
                                  uniquingKeysWith: { _, latest in latest }),
-            todayLoggedInOtherGoal: loggedTodayInAnyGoal && todayKind == nil
+            todayLoggedInOtherGoal: loggedTodayElsewhere && todayKind == nil
         )
     }
     

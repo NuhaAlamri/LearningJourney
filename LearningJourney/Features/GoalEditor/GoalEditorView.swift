@@ -23,12 +23,28 @@ struct GoalEditorView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button(role: .confirm) {
-                    viewModel.save(in: context)
-                    dismiss()
+                    if viewModel.needsConfirmation {
+                        viewModel.isShowingUpdateAlert = true
+                    } else {
+                        commit()
+                    }
                 }
                 .disabled(!viewModel.canConfirm)
             }
         }
+        .alert("Update goal", isPresented: $viewModel.isShowingUpdateAlert) {
+            Button("Dismiss", role: .cancel) { }
+            Button("Update", role: .confirm) { commit() }
+                .keyboardShortcut(.defaultAction)
+        } message: {
+            Text("If you update now, your streak will start over.")
+        }
+    }
+
+    /// يحفظ ويرجع لـ Activity
+    private func commit() {
+        viewModel.save(in: context)
+        dismiss()
     }
 }
 

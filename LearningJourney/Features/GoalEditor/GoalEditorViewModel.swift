@@ -13,6 +13,7 @@ final class GoalEditorViewModel {
     let goal: Goal
     let mode: GoalEditorMode
     var draft: GoalDraft
+    var isShowingUpdateAlert = false
 
     init(goal: Goal, mode: GoalEditorMode) {
         self.goal = goal
@@ -29,6 +30,9 @@ final class GoalEditorViewModel {
 
     /// زر ✓ شغّال؟
     var canConfirm: Bool { draft.isValid && hasChanges }
+
+    /// يحتاج تنبيه قبل الحفظ؟ (بس في التعديل، لأنه يصفّر السلسلة)
+    var needsConfirmation: Bool { mode == .edit }
 
     /// يقفل الهدف الحالي ويبدأ الجديد
     func save(in context: ModelContext) {

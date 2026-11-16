@@ -62,4 +62,17 @@ struct GoalEditorViewModelTests {
         vm.draft.topic = "Swift"           // نفس الموضوع القديم مسموح
         #expect(vm.canConfirm)
     }
+    
+    // MARK: - Confirmation (T26)
+
+    @Test func editNeedsConfirmation() throws {
+        let vm = GoalEditorViewModel(goal: try makeGoal(), mode: .edit)
+        #expect(vm.needsConfirmation)
+        #expect(!vm.isShowingUpdateAlert)
+    }
+
+    @Test func newDoesNotNeedConfirmation() throws {
+        let vm = GoalEditorViewModel(goal: try makeGoal(), mode: .new)
+        #expect(!vm.needsConfirmation)
+    }
 }

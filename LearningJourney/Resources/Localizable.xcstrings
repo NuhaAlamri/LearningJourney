@@ -45,6 +45,9 @@
     "Day Freezed" : {
 
     },
+    "Dismiss" : {
+
+    },
     "Freeze for a day" : {
 
     },
@@ -61,6 +64,9 @@
 
     },
     "I want to learn it in a" : {
+
+    },
+    "If you update now, your streak will start over." : {
 
     },
     "Learned" : {
@@ -94,6 +100,12 @@
 
     },
     "This app will help you learn every day!" : {
+
+    },
+    "Update" : {
+
+    },
+    "Update goal" : {
 
     },
     "Want to set another goal?" : {

@@ -28,7 +28,7 @@ struct ActivityContent: View {
                 switch snapshot.goalState {
                 case .active:
                     LogButton(
-                        state: LogButtonState(todayKind: snapshot.todayKind),
+                        state: LogButtonState(todayKind: snapshot.kind(on: snapshot.today)),
                         isEnabled: snapshot.canLog,
                         action: onLog
                     )
@@ -36,7 +36,7 @@ struct ActivityContent: View {
 
                     FreezeSection(
                         canFreeze: snapshot.canFreeze,
-                        isFreezedToday: snapshot.todayKind == .freezed,
+                        isFreezedToday: snapshot.kind(on: snapshot.today) == .freezed,
                         used: snapshot.freezesUsed,
                         limit: snapshot.freezeLimit,
                         action: onFreeze

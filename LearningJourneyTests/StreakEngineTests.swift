@@ -151,12 +151,15 @@ struct StreakEngineTests {
     
     @Test func cannotLogWhenTodayWasLoggedInPreviousGoal() {
         let s = StreakEngine.snapshot(
-            start: Fixtures.october(20), duration: .week, logs: [],
-            now: Fixtures.october(20, hour: 15),
-            loggedTodayInAnyGoal: true, calendar: calendar
+            start: Fixtures.october(20), duration: .week,
+            logs: [], otherLogs: [log(20)],
+            now: Fixtures.october(20, hour: 15), calendar: calendar
         )
         #expect(!s.canLog)
         #expect(!s.canFreeze)
+        #expect(s.kind(on: day(20)) == .learned)   // اليوم ملوّن من الهدف القديم
+        #expect(s.streak == 0)                      // لكن ما يُحسب في الهدف الجديد
+        #expect(s.learnedDays == 0)
     }
 
     // MARK: - Goal end
