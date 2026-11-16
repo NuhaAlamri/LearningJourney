@@ -13,13 +13,15 @@ struct MonthGridView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text(month, format: .dateTime.month(.wide).year())
                 .font(.headline)
+                .accessibilityAddTraits(.isHeader)
 
-            LazyVGrid(columns: columns, spacing: 8) {
+                        LazyVGrid(columns: columns, spacing: 8) {
                 ForEach(symbols.indices, id: \.self) { index in
                     Text(symbols[index])
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(.secondary)
-                        .accessibilityHidden(true)
+                    .font(.footnote.weight(.semibold))
+                    .textCase(.uppercase)
+                    .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
                 }
 
                 ForEach(0..<CalendarMath.leadingBlanks(for: month, calendar: calendar), id: \.self) { _ in

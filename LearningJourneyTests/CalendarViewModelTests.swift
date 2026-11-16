@@ -7,17 +7,34 @@ struct CalendarViewModelTests {
 
     let calendar = Fixtures.calendar
 
-    @Test func monthsFromFirstGoalToNow() {
-        let vm = CalendarViewModel()
-        let months = vm.months(from: Fixtures.october(20),
-                               to: calendar.date(from: DateComponents(year: 2025, month: 1, day: 15))!,
-                               calendar: calendar)
-        #expect(months.count == 4)   // أكتوبر، نوفمبر، ديسمبر، يناير
+    func date(_ y: Int, _ m: Int, _ d: Int) -> Date {
+        calendar.date(from: DateComponents(year: y, month: m, day: d))!
     }
 
-    @Test func noGoalShowsCurrentMonthOnly() {
-        let vm = CalendarViewModel()
-        #expect(vm.months(from: nil, to: Fixtures.october(24), calendar: calendar).count == 1)
+    @Test func monthsFromFirstGoalToTwelveAhead() {
+        let months = CalendarViewModel().months(
+            from: date(2024, 10, 20), to: date(2025, 1, 15), calendar: calendar
+        )
+        #expect(months.count == 4 + 12)                // أكتوبر–يناير + 12 قدام
+        #expect(months.first == date(2024, 10, 1))
+        #expect(months.last == date(2026, 1, 1))
+    }
+
+    @Test func noGoalShowsCurrentMonthAndAhead() {
+        let months = CalendarViewModel().months(from: nil, to: date(2024, 10, 24), calendar: calendar)
+        #expect(months.count == 1 + 12)
+        #expect(months.first == date(2024, 10, 1))     // الحالي أول شي
+    }
+
+    @Test func aheadCanBeChanged() {
+        let months = CalendarViewModel().months(from: nil, to: date(2024, 10, 24),
+                                                ahead: 3, calendar: calendar)
+        #expect(months.count == 4)
+    }
+
+    @Test func currentMonthIsFirstDayOfMonth() {
+        let current = CalendarViewModel().currentMonth(date(2024, 10, 24), calendar: calendar)
+        #expect(current == date(2024, 10, 1))
     }
 
     @Test func dayKindsIncludeAllGoals() {

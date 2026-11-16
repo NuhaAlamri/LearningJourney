@@ -9,9 +9,11 @@ enum CalendarMath {
         return (0..<7).compactMap { calendar.date(byAdding: .day, value: $0, to: week.start) }
     }
 
-    /// حروف الأيام بالترتيب الصحيح، مثل S M T W T F S
-    static func weekdaySymbols(calendar: Calendar = .current) -> [String] {
-        let symbols = calendar.veryShortWeekdaySymbols   // دائماً تبدأ بالأحد
+    /// اختصارات أيام الأسبوع بالترتيب الصحيح
+    /// - short: false → S M T  (شريط الأسبوع)
+    /// - short: true  → Sun Mon Tue  (التقويم)
+    static func weekdaySymbols(short: Bool = false, calendar: Calendar = .current) -> [String] {
+        let symbols = short ? calendar.shortWeekdaySymbols : calendar.veryShortWeekdaySymbols
         let shift = calendar.firstWeekday - 1
         return Array(symbols[shift...] + symbols[..<shift])
     }
