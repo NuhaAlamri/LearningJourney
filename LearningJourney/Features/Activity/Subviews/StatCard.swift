@@ -1,52 +1,50 @@
 import SwiftUI
 
-/// بطاقة عدّاد: أيقونة + عدد الأيام + تسمية
+/// بطاقة إحصائية: أيقونة + "4 days" + "Learned"
 struct StatCard: View {
-    let symbol: String
+    let value: Int
+    let title: LocalizedStringKey
+    let systemImage: String
     let tint: Color
-    let count: Int
-    let label: LocalizedStringKey
 
     var body: some View {
         VStack(spacing: 8) {
-            Image(systemName: symbol)
-                .font(.subheadline.bold())
+            Image(systemName: systemImage)
+                .font(.title2)
                 .foregroundStyle(tint)
-                .accessibilityHidden(true)
+                .frame(height: 25)
 
             VStack(spacing: 4) {
-                Text("\(count) days")
+                Text("\(value) days")
                     .font(.callout.weight(.semibold))
+                    .contentTransition(.numericText(value: Double(value)))
                     .monospacedDigit()
-                    .contentTransition(.numericText(value: Double(count)))
-                    .animation(.default, value: count)
-                Text(label)
+
+                Text(title)
                     .font(.caption)
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, minHeight: 74)
         .padding(14)
-        .background(.card, in: .rect(cornerRadius: 34, style: .continuous))
+        .glassEffect(.regular, in: .rect(cornerRadius: 34, style: .continuous))
         .accessibilityElement(children: .combine)
     }
 }
 
 extension StatCard {
-    /// بطاقة السلسلة 🔥
-    static func learned(_ count: Int) -> StatCard {
-        StatCard(symbol: "flame.fill", tint: .learned, count: count, label: "Learned")
+    static func learned(_ days: Int) -> StatCard {
+        StatCard(value: days, title: "Learned", systemImage: "flame.fill", tint: .learned)
     }
 
-    /// بطاقة التجميد ❄️
-    static func freezed(_ count: Int) -> StatCard {
-        StatCard(symbol: "snowflake", tint: .freeze, count: count, label: "Freezed")
+    static func freezed(_ days: Int) -> StatCard {
+        StatCard(value: days, title: "Freezed", systemImage: "snowflake", tint: .freeze)
     }
 }
 
 #Preview {
     HStack(spacing: 12) {
         StatCard.learned(4)
-        StatCard.freezed(1)
+        StatCard.freezed(0)
     }
     .padding()
 }

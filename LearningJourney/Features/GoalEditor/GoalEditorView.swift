@@ -15,7 +15,7 @@ struct GoalEditorView: View {
         ScrollView {
             GoalFormView(draft: $viewModel.draft)
                 .padding(.horizontal, 16)
-                .padding(.top, 24)
+                .padding(.top, 36)
         }
         .scrollDismissesKeyboard(.interactively)
         .navigationTitle("Learning Goal")

@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// زر التجميد + عدّاد الرصيد
+/// زر التجميد + عدّاد التجميدات
 struct FreezeSection: View {
     let canFreeze: Bool
     let isFreezedToday: Bool
@@ -8,42 +8,34 @@ struct FreezeSection: View {
     let limit: Int
     let action: () -> Void
 
-    var body: some View {
-        VStack(spacing: 16) {
-            Button(action: action) {
-                Text(title)
-                    .frame(maxWidth: 272)
-            }
-            .prominentGlassButton(tint: .freeze)
-            .disabled(!canFreeze)
-
-            Text("\(used) out of \(limit) Freezes used")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-                .monospacedDigit()
-                .contentTransition(.numericText(value: Double(used)))
-                .animation(.default, value: used)
-            
-            
-        }
-    }
+    @ScaledMetric(relativeTo: .subheadline) private var counterSize: CGFloat = 14
 
     private var title: LocalizedStringKey {
         isFreezedToday ? "Freezed for a day" : "Freeze for a day"
     }
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Button(action: action) {
+                Text(title)
+                    .frame(maxWidth: .infinity)
+            }
+            .prominentGlassButton(tint: .freeze)
+            .disabled(!canFreeze)
+            .frame(maxWidth: 272)
+            .sensoryFeedback(.success, trigger: isFreezedToday) { old, new in !old && new }
+
+            Text("\(used) out of \(limit) Freezes used")
+                .font(.system(size: counterSize))
+                .foregroundStyle(.secondary)
+        }
+    }
 }
 
-#Preview("Can freeze") {
-    FreezeSection(canFreeze: true, isFreezedToday: false, used: 0, limit: 2) {}
-        .padding()
-}
-
-#Preview("Freezed today") {
-    FreezeSection(canFreeze: false, isFreezedToday: true, used: 1, limit: 2) {}
-        .padding()
-}
-
-#Preview("No freezes left") {
-    FreezeSection(canFreeze: false, isFreezedToday: false, used: 2, limit: 2) {}
-        .padding()
+#Preview {
+    VStack(spacing: 40) {
+        FreezeSection(canFreeze: true, isFreezedToday: false, used: 0, limit: 2) {}
+        FreezeSection(canFreeze: false, isFreezedToday: true, used: 1, limit: 2) {}
+    }
+    .padding()
 }

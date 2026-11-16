@@ -10,6 +10,12 @@ struct ActivityContent: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
+                Text(snapshot.today, format: .dateTime.weekday(.wide).day().month(.wide))
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 2)
+
                 VStack(spacing: 12) {
                     WeekStripView(
                         days: CalendarMath.weekDays(containing: snapshot.today, calendar: calendar),
@@ -23,7 +29,7 @@ struct ActivityContent: View {
                         StatCard.freezed(snapshot.freezesUsed)
                     }
                 }
-                .padding(.top, 16)
+                .padding(.top, 15)
 
                 switch snapshot.goalState {
                 case .active:
@@ -32,7 +38,7 @@ struct ActivityContent: View {
                         isEnabled: snapshot.canLog,
                         action: onLog
                     )
-                    .padding(.top, 56)
+                    .padding(.top, 48)
 
                     FreezeSection(
                         canFreeze: snapshot.canFreeze,
@@ -45,23 +51,27 @@ struct ActivityContent: View {
 
                 case .completed:
                     GoalEndView(outcome: .completed)
-                        .padding(.top, 56)
+                        .padding(.top, 69)
 
                 case .notMet:
                     GoalEndView(outcome: .notMet)
-                        .padding(.top, 56)
+                        .padding(.top, 69)
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 24)
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 13)
             .padding(.bottom, 24)
             .animation(.default, value: snapshot.goalState)
         }
-        .navigationTitle("Activity")
-        .navigationSubtitle(
-            snapshot.today.formatted(.dateTime.weekday(.wide).day().month(.wide))
-        )
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Text("Activity")
+                    .font(.largeTitle.bold())
+                    .fixedSize()
+                    .accessibilityAddTraits(.isHeader)
+            }
+            .sharedBackgroundVisibility(.hidden)
+        }
     }
 
     /// حالة كل يوم في الشريط

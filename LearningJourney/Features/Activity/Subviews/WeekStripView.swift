@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// شريط الأسبوع: حروف الأيام فوق سبع خلايا
+/// شريط الأسبوع: حرف اليوم + دائرة الرقم
 struct WeekStripView: View {
     let days: [Date]
     let symbols: [String]
@@ -8,23 +8,23 @@ struct WeekStripView: View {
     var calendar: Calendar = .current
 
     var body: some View {
-        VStack(spacing: 4) {
-            HStack(spacing: 0) {
-                ForEach(symbols.indices, id: \.self) { index in
+        HStack(spacing: 0) {
+            ForEach(days.indices, id: \.self) { index in
+                let day = days[index]
+                VStack(spacing: 4) {
                     Text(symbols[index])
                         .font(.footnote.weight(.semibold))
-                        .frame(maxWidth: .infinity)
-                }
-            }
-            .accessibilityHidden(true)
+                        .accessibilityHidden(true)
 
-            HStack(spacing: 0) {
-                ForEach(days, id: \.self) { day in
-                    DayCell(day: calendar.component(.day, from: day), status: status(day), date: day)
-                        .frame(maxWidth: .infinity)
+                    DayCell(
+                        day: calendar.component(.day, from: day),
+                        status: status(day),
+                        size: 44,
+                        date: day
+                    )
                 }
+                .frame(maxWidth: .infinity)
             }
-            
         }
         .dynamicTypeSize(...DynamicTypeSize.accessibility1)
     }
@@ -32,15 +32,13 @@ struct WeekStripView: View {
 
 #Preview {
     let calendar = Fixtures.calendar
-    let days = CalendarMath.weekDays(containing: Fixtures.october(24), calendar: calendar)
-
+    let today = Fixtures.october(24)
     WeekStripView(
-        days: days,
+        days: CalendarMath.weekDays(containing: today, calendar: calendar),
         symbols: CalendarMath.weekdaySymbols(calendar: calendar),
         status: { day in
             switch calendar.component(.day, from: day) {
-            case 20...22: .learned
-            case 23:      .freezed
+            case 20...23: .learned
             case 24:      .todayPending
             default:      .plain
             }

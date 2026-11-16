@@ -8,6 +8,7 @@ struct ActivityView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var viewModel = ActivityViewModel()
+    @State private var isEditingGoal = false
 
     var body: some View {
         TimelineView(.everyMinute) { timeline in
@@ -26,13 +27,32 @@ struct ActivityView: View {
             )
         }
         .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                NavigationLink(value: Route.editGoal) {
-                    Label("Learning Goal", systemImage: "pencil.and.outline")
-                }
+            ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink(value: Route.calendar) {
                     Label("Calendar", systemImage: "calendar")
                 }
+            }
+
+            ToolbarSpacer(.fixed, placement: .topBarTrailing)
+
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isEditingGoal = true
+                } label: {
+                    Label("Learning Goal", systemImage: "pencil.and.outline")
+                }
+            }
+        }
+        .sheet(isPresented: $isEditingGoal) {
+            NavigationStack {
+                GoalEditorView(goal: goal, mode: .edit)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button(role: .close) {
+                                isEditingGoal = false
+                            }
+                        }
+                    }
             }
         }
     }

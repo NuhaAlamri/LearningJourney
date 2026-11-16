@@ -21,7 +21,7 @@ struct CalendarView: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     ForEach(months, id: \.self) { month in
-                        VStack(spacing: 16) {
+                        VStack(spacing: 8) {
                             MonthGridView(
                                 month: month,
                                 symbols: symbols,
@@ -32,7 +32,7 @@ struct CalendarView: View {
                                 Divider()
                             }
                         }
-                        .padding(.top, 16)
+                        .padding(.top, 15)
                         .id(month)
                         .onAppear {
                             if month == months.last {
@@ -41,7 +41,7 @@ struct CalendarView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 12)
                 .padding(.bottom, 16)
             }
             .onAppear {

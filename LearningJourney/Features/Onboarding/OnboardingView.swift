@@ -6,7 +6,7 @@ struct OnboardingView: View {
     @Environment(\.modelContext) private var context
     @State private var viewModel = OnboardingViewModel()
 
-    @ScaledMetric(relativeTo: .largeTitle) private var iconSize: CGFloat = 36
+    @ScaledMetric(relativeTo: .largeTitle) private var iconSize: CGFloat = 35
 
     var body: some View {
         ScrollView {

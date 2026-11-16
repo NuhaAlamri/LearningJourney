@@ -24,7 +24,7 @@ struct LogButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.largeTitle.bold())
+                .font(.body.bold())
                 .multilineTextAlignment(.center)
                 .padding(24)
                 .frame(maxWidth: 272, maxHeight: 272)

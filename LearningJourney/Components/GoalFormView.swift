@@ -6,23 +6,26 @@ struct GoalFormView: View {
     @FocusState private var isTopicFocused: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 32) {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("I want to learn")
+                .font(.callout)
 
-            VStack(alignment: .leading, spacing: 12) {
-                Text("I want to learn")
-                    .font(.callout)
-                TextField("Swift", text: $draft.topic)
-                    .focused($isTopicFocused)
-                    .submitLabel(.done)
-                    .autocorrectionDisabled()
-                Divider()
-            }
+            TextField("Swift", text: $draft.topic)
+                .font(.body.weight(.medium))
+                .focused($isTopicFocused)
+                .submitLabel(.done)
+                .autocorrectionDisabled()
+                .padding(.top, 19)
 
-            VStack(alignment: .leading, spacing: 12) {
-                Text("I want to learn it in a")
-                    .font(.callout)
-                DurationPicker(selection: $draft.duration)
-            }
+            Divider()
+                .padding(.top, 14)
+
+            Text("I want to learn it in a")
+                .font(.callout)
+                .padding(.top, 30)
+
+            DurationPicker(selection: $draft.duration)
+                .padding(.top, 13)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .onChange(of: draft.duration) {
