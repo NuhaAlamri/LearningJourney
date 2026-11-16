@@ -11,7 +11,21 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "LearningJourney", "target-membership": [ "LearningJourney" ] },
+    {
+      "kind": "folder",
+      "path": "LearningJourney",
+      "target-membership": [
+        "LearningJourney",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "LearningJourneyTests",
+          "inclusions": [
+            "Resources/LJ_Icon.icon",
+          ],
+        },
+      ],
+    },
     { "kind": "folder", "path": "LearningJourneyTests", "target-membership": [ "LearningJourneyTests" ] },
     {
       "kind": "group",
@@ -34,6 +48,7 @@
         "resources",
       ],
       "build-settings": {
+        "ASSETCATALOG_COMPILER_APPICON_NAME": "LJ_Icon",
         "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
         "CODE_SIGN_STYLE": "Automatic",
         "CURRENT_PROJECT_VERSION": "1",
