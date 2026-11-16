@@ -52,7 +52,7 @@ struct OnboardingView: View {
     }
 }
 
-#Preview {
+#Preview("Onboarding") {
     OnboardingView()
         .modelContainer(for: [Goal.self, DayLog.self], inMemory: true)
 }

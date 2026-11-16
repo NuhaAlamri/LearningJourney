@@ -55,8 +55,8 @@ struct CalendarView: View {
     }
 }
 
-#Preview(traits: .sampleData) {
+#Preview("Activities - Beginning", traits: .sampleData) {
     NavigationStack {
-        CalendarView(calendar: Fixtures.calendar)
+        CalendarView()
     }
 }

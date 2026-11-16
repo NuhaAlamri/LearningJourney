@@ -82,7 +82,7 @@ struct ActivityContent: View {
     }
 }
 
-#Preview("Current day") {
+#Preview("Current day - Default") {
     NavigationStack {
         ActivityContent(snapshot: Fixtures.currentDay.snapshot, calendar: Fixtures.calendar)
     }
@@ -106,13 +106,13 @@ struct ActivityContent: View {
     }
 }
 
-#Preview("Goal completed") {
+#Preview("Activity - Goal Completed") {
     NavigationStack {
         ActivityContent(snapshot: Fixtures.goalCompleted.snapshot, calendar: Fixtures.calendar)
     }
 }
 
-#Preview("Goal not met") {
+#Preview("Activity - Goal not met") {
     NavigationStack {
         ActivityContent(snapshot: Fixtures.goalNotMet.snapshot, calendar: Fixtures.calendar)
     }

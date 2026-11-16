@@ -48,16 +48,20 @@ struct GoalEditorView: View {
     }
 }
 
-#Preview("Edit", traits: .sampleData) {
+#Preview("Update Learning goal", traits: .sampleData) {
     @Previewable @Query var goals: [Goal]
     NavigationStack {
-        if let goal = goals.first { GoalEditorView(goal: goal, mode: .edit) }
+        if let goal = goals.first {
+            GoalEditorView(goal: goal, mode: .edit)
+        }
     }
 }
 
-#Preview("New", traits: .sampleData) {
+#Preview("Set a Goal", traits: .endedGoal) {
     @Previewable @Query var goals: [Goal]
     NavigationStack {
-        if let goal = goals.first { GoalEditorView(goal: goal, mode: .new) }
+        if let goal = goals.first {
+            GoalEditorView(goal: goal, mode: .new)
+        }
     }
 }
