@@ -6,6 +6,7 @@ struct ActivityView: View {
     let goal: Goal
 
     @Environment(\.modelContext) private var context
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var viewModel = ActivityViewModel()
 
     var body: some View {
@@ -13,12 +14,12 @@ struct ActivityView: View {
             ActivityContent(
                 snapshot: viewModel.snapshot(for: goal, now: timeline.date, context: context),
                 onLog: {
-                    withAnimation(.snappy) {
+                    withAnimation(logAnimation) {
                         viewModel.log(.learned, for: goal, context: context)
                     }
                 },
                 onFreeze: {
-                    withAnimation(.snappy) {
+                    withAnimation(logAnimation) {
                         viewModel.log(.freezed, for: goal, context: context)
                     }
                 }
@@ -34,6 +35,11 @@ struct ActivityView: View {
                 }
             }
         }
+    }
+
+    /// حركة التسجيل: هادية لو المستخدم فعّل Reduce Motion
+    private var logAnimation: Animation {
+        reduceMotion ? .easeInOut(duration: 0.2) : .snappy
     }
 }
 

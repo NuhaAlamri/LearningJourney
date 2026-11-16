@@ -24,7 +24,9 @@ struct WeekStripView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
+            
         }
+        .dynamicTypeSize(...DynamicTypeSize.accessibility1)
     }
 }
 

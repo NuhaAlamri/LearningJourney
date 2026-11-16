@@ -27,6 +27,15 @@ extension DayStatus {
         case .todayPending: String(localized: "Not logged yet")
         }
     }
+
+    /// رمز يميّز الحالة بدون لون
+    var symbol: String? {
+        switch self {
+        case .learned: "flame.fill"
+        case .freezed: "snowflake"
+        case .plain, .todayPending: nil
+        }
+    }
 }
 
 /// خلية يوم دائرية، مثل Sketch
@@ -37,6 +46,7 @@ struct DayCell: View {
     var date: Date? = nil
 
     @ScaledMetric(relativeTo: .title3) private var scale: CGFloat = 1
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
 
     var body: some View {
         Text(day, format: .number)
@@ -44,6 +54,14 @@ struct DayCell: View {
             .foregroundStyle(textColor)
             .frame(width: size * scale, height: size * scale)
             .background(background, in: .circle)
+            .overlay(alignment: .bottomTrailing) {
+                if differentiateWithoutColor, let symbol = status.symbol {
+                    Image(systemName: symbol)
+                        .font(.caption2.bold())
+                        .foregroundStyle(textColor)
+                        .accessibilityHidden(true)
+                }
+            }
             .accessibilityLabel(accessibilityLabel)
             .accessibilityValue(status.accessibilityValue)
     }

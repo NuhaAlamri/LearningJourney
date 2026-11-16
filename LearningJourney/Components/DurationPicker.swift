@@ -5,16 +5,21 @@ struct DurationPicker: View {
     @Binding var selection: GoalDuration
 
     var body: some View {
-        HStack(spacing: 12) {
-            ForEach(GoalDuration.allCases) { duration in
-                button(for: duration)
-                    .accessibilityAddTraits(duration == selection ? .isSelected : [])
-            }
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 12) { buttons }
+            VStack(alignment: .leading, spacing: 12) { buttons }
         }
         .controlSize(.large)
         .buttonBorderShape(.capsule)
         .animation(.snappy, value: selection)
         .sensoryFeedback(.selection, trigger: selection)
+    }
+
+    private var buttons: some View {
+        ForEach(GoalDuration.allCases) { duration in
+            button(for: duration)
+                .accessibilityAddTraits(duration == selection ? .isSelected : [])
+        }
     }
 
     @ViewBuilder
