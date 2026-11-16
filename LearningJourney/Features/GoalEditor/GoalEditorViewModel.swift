@@ -1,1 +1,38 @@
+import Foundation
+import SwiftData
 
+/// وضع شاشة الهدف
+enum GoalEditorMode {
+    case edit   // ✏️: تعديل الهدف الحالي
+    case new    // Set a goal: هدف جديد بعد نهاية الحالي
+}
+
+/// حالة شاشة Learning Goal وزر ✓
+@Observable
+final class GoalEditorViewModel {
+    let goal: Goal
+    let mode: GoalEditorMode
+    var draft: GoalDraft
+
+    init(goal: Goal, mode: GoalEditorMode) {
+        self.goal = goal
+        self.mode = mode
+        self.draft = mode == .edit ? GoalDraft(goal: goal) : GoalDraft()
+    }
+
+    /// غيّر المستخدم شيء عن الهدف الحالي؟
+    var hasChanges: Bool {
+        mode == .new
+            || draft.trimmedTopic != goal.topic
+            || draft.duration != goal.duration
+    }
+
+    /// زر ✓ شغّال؟
+    var canConfirm: Bool { draft.isValid && hasChanges }
+
+    /// يقفل الهدف الحالي ويبدأ الجديد
+    func save(in context: ModelContext) {
+        guard canConfirm else { return }
+        _ = try? context.replaceGoal(goal, topic: draft.trimmedTopic, duration: draft.duration)
+    }
+}
