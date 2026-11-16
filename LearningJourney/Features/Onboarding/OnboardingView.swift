@@ -39,12 +39,8 @@ struct OnboardingView: View {
                     viewModel.start(in: context)
                 } label: {
                     Text("Start Learning")
-                        .font(.body.weight(.medium))
                 }
-                .buttonStyle(.glassProminent)
-                .buttonBorderShape(.capsule)
-                .controlSize(.large)
-                .tint(.learned)
+                .prominentGlassButton()
                 .disabled(!viewModel.draft.isValid)
 
                 Text("You can edit your desire later")

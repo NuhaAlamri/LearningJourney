@@ -12,8 +12,16 @@ struct ActivityView: View {
         TimelineView(.everyMinute) { timeline in
             ActivityContent(
                 snapshot: viewModel.snapshot(for: goal, now: timeline.date, context: context),
-                onLog: { viewModel.log(.learned, for: goal, context: context) },
-                onFreeze: { viewModel.log(.freezed, for: goal, context: context) }
+                onLog: {
+                    withAnimation(.snappy) {
+                        viewModel.log(.learned, for: goal, context: context)
+                    }
+                },
+                onFreeze: {
+                    withAnimation(.snappy) {
+                        viewModel.log(.freezed, for: goal, context: context)
+                    }
+                }
             )
         }
         .toolbar {
@@ -23,7 +31,6 @@ struct ActivityView: View {
                 }
                 NavigationLink(value: Route.calendar) {
                     Label("Calendar", systemImage: "calendar")
-                    
                 }
             }
         }

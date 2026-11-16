@@ -12,20 +12,19 @@ struct FreezeSection: View {
         VStack(spacing: 16) {
             Button(action: action) {
                 Text(title)
-                    .font(.body.weight(.medium))
                     .frame(maxWidth: 272)
             }
-            .buttonStyle(.glassProminent)
-            .buttonBorderShape(.capsule)
-            .controlSize(.large)
-            .tint(.freeze)
+            .prominentGlassButton(tint: .freeze)
             .disabled(!canFreeze)
 
             Text("\(used) out of \(limit) Freezes used")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-                .contentTransition(.numericText())
+                .monospacedDigit()
+                .contentTransition(.numericText(value: Double(used)))
                 .animation(.default, value: used)
+            
+            
         }
     }
 

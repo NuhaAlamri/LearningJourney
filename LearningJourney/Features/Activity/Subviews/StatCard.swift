@@ -17,7 +17,8 @@ struct StatCard: View {
             VStack(spacing: 4) {
                 Text("\(count) days")
                     .font(.callout.weight(.semibold))
-                    .contentTransition(.numericText())
+                    .monospacedDigit()
+                    .contentTransition(.numericText(value: Double(count)))
                     .animation(.default, value: count)
                 Text(label)
                     .font(.caption)
@@ -26,7 +27,6 @@ struct StatCard: View {
         .frame(maxWidth: .infinity)
         .padding(14)
         .background(.card, in: .rect(cornerRadius: 34, style: .continuous))
-        .glassEffect(.regular, in: .rect(cornerRadius: 34, style: .continuous))
         .accessibilityElement(children: .combine)
     }
 }

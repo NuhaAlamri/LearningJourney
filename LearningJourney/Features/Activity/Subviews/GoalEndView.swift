@@ -50,13 +50,9 @@ struct GoalEndView: View {
                 .padding(.bottom, 68)
 
             NavigationLink(value: Route.newGoal) {
-                Label("Set a goal", systemImage: "pencil.and.outline")   // ⚑ الأيقونة
-                    .font(.body.weight(.medium))
+                Label("Set a goal", systemImage: "pencil.and.outline")
             }
-            .buttonStyle(.glassProminent)
-            .buttonBorderShape(.capsule)
-            .controlSize(.large)
-            .tint(.learned)
+            .prominentGlassButton()
         }
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
