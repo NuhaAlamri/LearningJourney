@@ -11,7 +11,7 @@ struct FreezeSection: View {
     @ScaledMetric(relativeTo: .subheadline) private var counterSize: CGFloat = 14
 
     private var title: LocalizedStringKey {
-        isFreezedToday ? "Freezed for a day" : "Freeze for a day"
+        isFreezedToday ? "Freezed for a Day" : "Freeze for a Day"
     }
 
     var body: some View {

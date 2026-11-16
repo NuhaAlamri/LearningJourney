@@ -50,7 +50,7 @@ struct GoalEndView: View {
                 .padding(.bottom, 68)
 
             NavigationLink(value: Route.newGoal) {
-                Label("Set a goal", systemImage: "pencil.and.outline")
+                Label("Set a Goal", systemImage: "pencil.and.outline")
             }
             .prominentGlassButton()
         }

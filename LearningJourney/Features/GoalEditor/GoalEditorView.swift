@@ -32,8 +32,8 @@ struct GoalEditorView: View {
                 .disabled(!viewModel.canConfirm)
             }
         }
-        .alert("Update goal", isPresented: $viewModel.isShowingUpdateAlert) {
-            Button("Dismiss", role: .cancel) { }
+        .alert("Update Goal", isPresented: $viewModel.isShowingUpdateAlert) {
+            Button(role: .cancel) { }
             Button("Update", role: .confirm) { commit() }
                 .keyboardShortcut(.defaultAction)
         } message: {

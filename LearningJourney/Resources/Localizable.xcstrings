@@ -42,19 +42,13 @@
     "Calendar" : {
 
     },
-    "Day Freezed" : {
-
-    },
-    "Dismiss" : {
-
-    },
-    "Freeze for a day" : {
+    "Freeze for a Day" : {
 
     },
     "Freezed" : {
 
     },
-    "Freezed for a day" : {
+    "Freezed for a Day" : {
 
     },
     "Hello %@" : {
@@ -81,6 +75,9 @@
     "Log as Learned" : {
 
     },
+    "Logged as Freezed" : {
+
+    },
     "Logged as Learned" : {
 
     },
@@ -93,7 +90,7 @@
     "Ready for your next goal?" : {
 
     },
-    "Set a goal" : {
+    "Set a Goal" : {
 
     },
     "Start Learning" : {
@@ -108,7 +105,7 @@
     "Update" : {
 
     },
-    "Update goal" : {
+    "Update Goal" : {
 
     },
     "Want to set another goal?" : {

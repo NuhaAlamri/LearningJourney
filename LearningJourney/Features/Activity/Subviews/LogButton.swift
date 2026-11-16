@@ -43,7 +43,7 @@ struct LogButton: View {
         switch state {
         case .ready:        "Log as Learned"
         case .learnedToday: "Logged as Learned"
-        case .freezedToday: "Day Freezed"
+        case .freezedToday: "Logged as Freezed"
         }
     }
 
