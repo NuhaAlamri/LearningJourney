@@ -28,8 +28,9 @@ enum StreakEngine {
         let today = calendar.startOfDay(for: now)
         let todayKind = logs.first { $0.day == today }?.kind
         let end = duration.endDate(from: start, calendar: calendar)
+        let finished = isFinished(end: end, todayKind: todayKind, now: now, calendar: calendar)
         let goalState: ActivitySnapshot.GoalState =
-            now < end ? .active : goalResult(logs: logs, end: end)
+            finished ? goalResult(logs: logs, end: end) : .active
         let chain = currentChain(logs, at: min(now, end))
         let loggedTodayElsewhere = otherLogs.contains { $0.day == today }
 
@@ -45,6 +46,20 @@ enum StreakEngine {
                                  uniquingKeysWith: { _, latest in latest }),
             todayLoggedInOtherGoal: loggedTodayElsewhere && todayKind == nil
         )
+    }
+    
+    /// DECISION: الهدف ينتهي إذا عدّى تاريخ النهاية،
+    /// أو إذا اليوم هو آخر يوم وانسجّل (ما بقى شي ممكن يغيّر النتيجة)
+    static func isFinished(
+        end: Date,
+        todayKind: DayLog.Kind?,
+        now: Date,
+        calendar: Calendar = .current
+    ) -> Bool {
+        guard now < end else { return true }
+        guard todayKind != nil,
+              let lastDay = calendar.date(byAdding: .day, value: -1, to: end) else { return false }
+        return calendar.startOfDay(for: now) == lastDay
     }
     
     /// السجلات من آخر انقطاع لين اللحظة المعطاة

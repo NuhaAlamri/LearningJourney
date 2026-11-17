@@ -64,8 +64,16 @@ extension ModelContext {
         calendar: Calendar = .current
     ) throws -> Goal {
         let end = old.duration.endDate(from: old.startDate, calendar: calendar)
-        if now >= end {
-            old.endedAt = end              // انتهى بالوقت
+        let snapshot = StreakEngine.snapshot(
+            start: old.startDate,
+            duration: old.duration,
+            logs: old.logs.map(\.entry),
+            now: now,
+            calendar: calendar
+        )
+
+        if snapshot.goalState != .active {
+            old.endedAt = min(now, end)    // خلص: بالوقت، أو بتسجيل آخر يوم
             old.endReason = .completed
         } else {
             old.endedAt = now              // المستخدم غيّره قبل النهاية
