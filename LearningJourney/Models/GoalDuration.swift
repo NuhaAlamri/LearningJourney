@@ -29,8 +29,8 @@ enum GoalDuration: String, Codable, CaseIterable, Identifiable {
     private var length: (component: Calendar.Component, value: Int) {
         switch self {
         case .week:  (.day, 7)
-        case .month: (.month, 1)   // DECISION: مؤقت حتى T39
-        case .year:  (.year, 1)    // DECISION: مؤقت حتى T39
+        case .month: (.month, 1)
+        case .year:  (.year, 1)   
         }
     }
 

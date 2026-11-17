@@ -48,8 +48,6 @@ enum StreakEngine {
         )
     }
     
-    /// DECISION: الهدف ينتهي إذا عدّى تاريخ النهاية،
-    /// أو إذا اليوم هو آخر يوم وانسجّل (ما بقى شي ممكن يغيّر النتيجة)
     static func isFinished(
         end: Date,
         todayKind: DayLog.Kind?,
@@ -76,7 +74,6 @@ enum StreakEngine {
         return chain
     }
     
-    /// DECISION (قرار المشرف): الهدف ناجح إذا ما انكسرت السلسلة لين نهاية المدة
     static func goalResult(logs: [LogEntry], end: Date) -> ActivitySnapshot.GoalState {
         guard !logs.isEmpty else { return .notMet }
         
