@@ -30,6 +30,7 @@ Learning Journey helps you build a daily learning habit. You pick a topic and a 
 | Goal result | Completed if the streak never broke until the end; otherwise not met. Shown as soon as the last day is logged. |
 | Changing the goal | The streak starts over. If today was already logged, the new goal can log from tomorrow. Old history stays in the calendar. |
 | One log per day | Across all goals, enforced by `#Unique` on `DayLog.day`. |
+| Update alert | The cancel button uses the system "Cancel" title, following Apple's Human Interface Guidelines. |
 
 ## Technologies
 
