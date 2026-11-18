@@ -39,12 +39,17 @@ struct GoalEditorView: View {
         } message: {
             Text("If you update now, your streak will start over.")
         }
+        .alert("Couldn't Save", isPresented: $viewModel.isShowingSaveError) {
+        } message: {
+            Text("Your goal wasn't updated. Please try again.")
+        }
     }
 
-    /// يحفظ ويرجع لـ Activity
+    /// يحفظ ويرجع لـ Activity (بس لو الحفظ نجح)
     private func commit() {
-        viewModel.save(in: context)
-        dismiss()
+        if viewModel.save(in: context) {
+            dismiss()
+        }
     }
 }
 

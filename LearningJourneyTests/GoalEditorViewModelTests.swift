@@ -36,6 +36,12 @@ struct GoalEditorViewModelTests {
         #expect(!vm.canConfirm)
     }
 
+    @Test func saveWithoutChangesReturnsFalse() throws {
+        let vm = GoalEditorViewModel(goal: try makeGoal(), mode: .edit)
+        #expect(!vm.save(in: context))
+        #expect(!vm.isShowingSaveError)
+    }
+
     @Test func editWithChangeCanConfirm() throws {
         let vm = GoalEditorViewModel(goal: try makeGoal(), mode: .edit)
         vm.draft.duration = .month
@@ -46,8 +52,9 @@ struct GoalEditorViewModelTests {
         let old = try makeGoal()
         let vm = GoalEditorViewModel(goal: old, mode: .edit)
         vm.draft.topic = "Design"
-        vm.save(in: context)
 
+        #expect(vm.save(in: context))
+        #expect(!vm.isShowingSaveError)
         #expect(old.endReason == .replaced)
         #expect(try context.activeGoal()?.topic == "Design")
     }

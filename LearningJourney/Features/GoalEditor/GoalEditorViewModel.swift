@@ -14,6 +14,7 @@ final class GoalEditorViewModel {
     let mode: GoalEditorMode
     var draft: GoalDraft
     var isShowingUpdateAlert = false
+    var isShowingSaveError = false
 
     init(goal: Goal, mode: GoalEditorMode) {
         self.goal = goal
@@ -35,8 +36,17 @@ final class GoalEditorViewModel {
     var needsConfirmation: Bool { mode == .edit }
 
     /// يقفل الهدف الحالي ويبدأ الجديد
-    func save(in context: ModelContext) {
-        guard canConfirm else { return }
-        _ = try? context.replaceGoal(goal, topic: draft.trimmedTopic, duration: draft.duration)
+    /// - Returns: `true` إذا انحفظ، عشان الشاشة تقفل بس لما ينجح
+    @discardableResult
+    func save(in context: ModelContext) -> Bool {
+        guard canConfirm else { return false }
+        do {
+            try context.replaceGoal(goal, topic: draft.trimmedTopic, duration: draft.duration)
+            return true
+        } catch {
+            context.rollback()
+            isShowingSaveError = true
+            return false
+        }
     }
 }

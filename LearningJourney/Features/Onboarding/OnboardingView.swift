@@ -49,6 +49,10 @@ struct OnboardingView: View {
             }
             .padding(.bottom, 8)
         }
+        .alert("Couldn't Save", isPresented: $viewModel.isShowingSaveError) {
+        } message: {
+            Text("Your goal wasn't saved. Please try again.")
+        }
     }
 }
 

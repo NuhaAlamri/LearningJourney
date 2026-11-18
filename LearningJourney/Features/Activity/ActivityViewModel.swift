@@ -5,6 +5,9 @@ import SwiftData
 @Observable
 final class ActivityViewModel {
 
+    /// يظهر تنبيه إذا فشل حفظ التسجيل
+    var isShowingSaveError = false
+
     /// لقطة الشاشة في لحظة معيّنة
     func snapshot(for goal: Goal, now: Date, context: ModelContext,
                   calendar: Calendar = .current) -> ActivitySnapshot {
@@ -20,7 +23,12 @@ final class ActivityViewModel {
 
     /// المستخدم ضغط Log أو Freeze
     func log(_ kind: DayLog.Kind, for goal: Goal, context: ModelContext) {
-        _ = try? context.logToday(kind, for: goal, now: .now)
+        do {
+            try context.logToday(kind, for: goal, now: .now)
+        } catch {
+            context.rollback()          // نلغي التسجيل اللي ما انحفظ
+            isShowingSaveError = true
+        }
     }
 
     /// تسجيلات الأهداف السابقة في الأسبوع الظاهر (للألوان بس)

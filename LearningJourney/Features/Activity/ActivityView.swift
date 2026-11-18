@@ -55,6 +55,10 @@ struct ActivityView: View {
                     }
             }
         }
+        .alert("Couldn't Save", isPresented: $viewModel.isShowingSaveError) {
+        } message: {
+            Text("Your day wasn't logged. Please try again.")
+        }
     }
 
     /// حركة التسجيل: هادية لو المستخدم فعّل Reduce Motion

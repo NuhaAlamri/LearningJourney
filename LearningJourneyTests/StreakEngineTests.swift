@@ -164,9 +164,10 @@ struct StreakEngineTests {
 
     // MARK: - Goal end
 
-    @Test func goalIsActiveUntilMidnightOfDay8() {
-        let s = snapshot(fullWeek, now: Fixtures.october(26, hour: 23))
+    @Test func goalIsActiveOnLastDayUntilLogged() {
+        let s = snapshot(fullWeek.dropLast(), now: Fixtures.october(26, hour: 23))
         #expect(s.goalState == .active)
+        #expect(s.canLog)
     }
 
     @Test func goalEndsAtMidnightOfDay8() {

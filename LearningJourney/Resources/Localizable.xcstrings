@@ -42,6 +42,9 @@
     "Calendar" : {
 
     },
+    "Couldn't Save" : {
+
+    },
     "Freeze for a Day" : {
 
     },
@@ -124,6 +127,15 @@
 
     },
     "You didn't reach your goal this time." : {
+
+    },
+    "Your day wasn't logged. Please try again." : {
+
+    },
+    "Your goal wasn't saved. Please try again." : {
+
+    },
+    "Your goal wasn't updated. Please try again." : {
 
     }
   },
