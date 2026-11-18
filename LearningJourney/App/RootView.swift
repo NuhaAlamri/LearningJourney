@@ -24,7 +24,6 @@ struct RootView: View {
     private func destination(for route: Route, goal: Goal) -> some View {
         switch route {
         case .calendar: CalendarView()
-        case .editGoal: GoalEditorView(goal: goal, mode: .edit)
         case .newGoal:  GoalEditorView(goal: goal, mode: .new)
         }
     }
